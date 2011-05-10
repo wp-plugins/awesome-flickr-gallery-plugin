@@ -4,7 +4,7 @@ Donate link:
 Tags: gallery, flickr, photo, image, slideshow, lightbox, portfolio
 Requires at least: 3.0
 Tested up to: 3.1.2
-Stable tag: 1.1.0
+Stable tag: 1.1.5
 
 Create a photo gallery of your Flickr photos on your WordPress enabled website enabling you to customize it the way you like it.
 
@@ -43,6 +43,14 @@ Make sure your Flickr API key and Flickr User ID are correct.
 Make sure you add the shortcode [AFG_gallery] to your post or page where you
 want to load the gallery.  This code is case-sensitive.
 
+== Upgrade Notice ==
+
+= 1.1.5 =
+Much better looking page navigation.  Check out the screenshot.
+
+= 1.1.0 =
+Added page navigation feature in this release.  Now there is a page navigation links at the bottom of the gallery, so that users can go through all your photos.
+
 == Screenshots ==
 
 1. Awesome Flickr Gallery Settings page
@@ -50,8 +58,7 @@ want to load the gallery.  This code is case-sensitive.
 3. Awesome Flickr Gallery with photos of size Square with Title and Description OFF
 4. Full size photo view with navigation options to next and previous photos in gallery
 5. Awesome Flickr Gallery with Small size photos and black background
-6. Page navigation feature added in version 1.1.0
-
+6. Page navigation feature added in version 1.1.5
 
 == Features Planned ==
 
@@ -66,6 +73,9 @@ Gallery (In no particular order):
 * Comment on the photos from your website itself
 
 == Changelog ==
+
+= 1.1.5 =
+* Added much better looking page navigation
 
 = 1.1.0 =
 * Added page navigation to the gallery.  Now max photos setting refers to max photos per page.
