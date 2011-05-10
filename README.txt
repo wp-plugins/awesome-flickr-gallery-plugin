@@ -52,7 +52,6 @@ want to load the gallery.  This code is case-sensitive.
 5. Awesome Flickr Gallery with Small size photos and black background
 6. Page navigation feature added in version 1.1.0
 
-
 == Features Planned ==
 
 Here's a list of planned features in upcoming releases of Awesome Flickr
