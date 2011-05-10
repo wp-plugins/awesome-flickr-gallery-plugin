@@ -1,6 +1,6 @@
 === Awesome Flickr Gallery ===
 Contributors: ronakg
-Donate link:
+Donate link: http://www.ronakg.in/projects/awesome-flickr-gallery-wordpress-plugin/
 Tags: gallery, flickr, photo, image, slideshow, lightbox, portfolio
 Requires at least: 3.0
 Tested up to: 3.1.2
@@ -23,7 +23,7 @@ Create a photo gallery of your Flickr photos on your WordPress enabled website e
 * Select background color between White, Black or Transparent based on your theme
 
 You can see a *live demo* of this plugin on my personal photography page -
-*http://www.ronakg.in/photography/*
+[Photography | RonakG.in](http://www.ronakg.in/photography/)
 
 == Installation ==
 
