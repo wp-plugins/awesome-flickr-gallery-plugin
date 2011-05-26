@@ -3,7 +3,7 @@
 define('BASE_URL', plugins_url() . '/' . basename(dirname(__FILE__)));
 define('SITE_URL', get_option('siteurl'));
 define('DEBUG', False);
-define('VERSION', '2.5.0');
+define('VERSION', '2.5.1');
 
 /* Map for photo titles displayed on the gallery. */
 $size_heading_map = array(
@@ -279,14 +279,19 @@ function afg_usage_box($code) {
         ";
 }
 
+function get_afg_option($gallery, $var) {
+    if ($gallery[$var]) return $gallery[$var];
+    else return get_option('afg_' . $var);
+}
+
 function afg_donate_box() {
     return "
         <div id=\"poststuff\">
         <div class=\"postbox\">
         <h3>Support this plugin</h3>
         <table class='form-table'>
-        <td colspan='3'>It takes time and effort to keep releasing new versions of this plugin.  If you like it, consider donating a few bucks to keep receiving new features.
-        <form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\"><div style=\"text-align:center\" class=\"paypal-donations\"><input type=\"hidden\" name=\"cmd\" value=\"_donations\" /><input type=\"hidden\" name=\"business\" value=\"2P32M6V34HDCQ\" /><input type=\"hidden\" name=\"currency_code\" value=\"USD\" /><input type=\"image\" src=\"" . BASE_URL . "/images/donate_small.png\" name=\"submit\" alt=\"PayPal - The safer, easier way to pay online.\" /><img alt=\"PayPal Donate\" src=\"https://www.paypal.com/en_US/i/scr/pixel.gif\" width=\"1\" height=\"1\" /></div></form>
+        <td>It takes time and effort to keep releasing new versions of this plugin.  If you like it, consider donating a few bucks to keep receiving new features.
+        </form><form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\"><div style=\"text-align:center\" class=\"paypal-donations\"><input type=\"hidden\" name=\"cmd\" value=\"_donations\" /><input type=\"hidden\" name=\"business\" value=\"2P32M6V34HDCQ\" /><input type=\"hidden\" name=\"currency_code\" value=\"USD\" /><input type=\"image\" src=\"" . BASE_URL . "/images/donate_small.png\" name=\"submit\" alt=\"PayPal - The safer, easier way to pay online.\" /><img alt=\"PayPal Donate\" src=\"https://www.paypal.com/en_US/i/scr/pixel.gif\" width=\"1\" height=\"1\" /><br />All major credit cards are accepted too.</div></form>
         </td>
         </table>
         </div></div>";
