@@ -2,7 +2,7 @@
 Contributors: ronakg
 Donate link: http://www.ronakg.in/projects/awesome-flickr-gallery-wordpress-plugin/
 Tags: gallery, flickr, photo, image, slideshow, colorbox, portfolio
-Requires at least: 3.0
+Requires at least: 2.5
 Tested up to: 3.2-beta2
 Stable tag: 2.6.2
 
@@ -45,7 +45,7 @@ Check out my home page to see a demo of how the Gallery fits into a sidebar widg
 **Support:**
 
 Can't get the plugin working?  Head to the discussion forum for solution -
-[Discussions | RonakG.in](http://www.ronakg.in/discussions/#/categories/awesome-flickr-gallery)
+[Discussions | RonakG.in](http://www.ronakg.in/discussions/)
 
 == Installation ==
 
@@ -77,7 +77,7 @@ colorbox etc.  If your theme has such an option, turn it off.
 
 
 Still can't get the plugin working?  Head to the discussion forum for solution -
-[Discussions | RonakG.in](http://www.ronakg.in/discussions/#/categories/awesome-flickr-gallery)
+[Discussions | RonakG.in](http://www.ronakg.in/discussions/)
 
 == Upgrade Notice ==
 
