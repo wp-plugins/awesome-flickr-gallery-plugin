@@ -3,7 +3,7 @@
 define('BASE_URL', plugins_url() . '/' . basename(dirname(__FILE__)));
 define('SITE_URL', get_option('siteurl'));
 define('DEBUG', false);
-define('VERSION', '2.7.5');
+define('VERSION', '2.7.7');
 
 /* Map for photo titles displayed on the gallery. */
 $size_heading_map = array(
@@ -80,8 +80,8 @@ $afg_yes_no_map = array(
 );
 
 $afg_descr_map = array(
-    'off' => 'Off (Faster)',
-    'on' => 'On (Slower)',
+    'off' => 'Off',
+    'on' => 'On',
     'default' => 'Use Default',
 );
 
@@ -121,6 +121,12 @@ function afg_get_encoded_params($params) {
     return $encoded_params;
 }
 
+function delete_all_caches() {
+    $galleries = get_option('afg_galleries');
+    foreach($galleries as $id => $ginfo) {
+        delete_transient('afg_id_'. $id);
+    }
+}
 function afg_get_photo_url($farm, $server, $pid, $secret, $size) {
     if ($size == 'NULL') {
         $size = '';
@@ -237,7 +243,7 @@ function afg_generate_gallery_settings_table() {
         <td><select name='afg_descr' id='afg_descr'>
             " . afg_generate_options($afg_descr_map, 'default', True) . "
         </select></td>
-        <td><font size='2'>Photo Description setting applies only to Small and Medium size photos. <font color='red'>WARNING:</font> Enabling descriptions for photos can significantly slow down loading of the gallery and hence is not recommended.</font></td>
+        <td><font size='2'>Photo Description setting applies only to Small and Medium size photos.</td>
         </tr>
 
         <tr valign='top'>
