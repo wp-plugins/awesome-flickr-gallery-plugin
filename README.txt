@@ -4,7 +4,7 @@ Donate link: http://www.ronakg.com/projects/awesome-flickr-gallery-wordpress-plu
 Tags: gallery, flickr, photo, image, slideshow, colorbox, portfolio
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 2.7.10
+Stable tag: 2.7.11
 
 Create a photo gallery of your Flickr photos on your WordPress enabled website
 enabling you to customize it the way you like it.
@@ -92,12 +92,16 @@ Also, some themes have built-in settings to display images using lightbox or col
 
 Awesome Flickr Gallery uses caching to avoid expensive calls to Flickr servers.  It intelligently figures out if cache needs to be updated or not.  However, sometimes it may not work as expected.  You should go to Default Settings and delete all cached data.
 
+= I created a gallery with source as a Group.  In this gallery, only 500 photos are appearing. =
+
+As Flickr Groups have thousands of photos, it becomes very expensive to fetch all the photos from Flickr.  Hence, Groups galleries are limited to latest 500 photos.
+
 Still can't get the plugin working?  Head to the discussion forum for solution -
 [Discussions | RonakG.com](http://www.ronakg.com/discussions/)
 
 == Upgrade Notice ==
 
-= 2.7.10 =
+= 2.7.11 =
 [ENHANCEMENT] Ability to create Gallery using any of your plublic Groups on Flickr.
 [ENHANCEMENT] Ability to disable built-in slideshow so that you can use slideshow from any other plugin or theme of your choice
 [ENHANCEMENT] Max photo per page limit extended to 999
@@ -189,7 +193,7 @@ Gallery (In no particular order):
 
 == Changelog ==
 
-= 2.7.10 =
+= 2.7.11 =
 * [Enhancement] Ability to create Gallery using any of your plublic Groups on Flickr.
 * [Enhancement] Ability to disable built-in slideshow so that you can use slideshow from any other plugin or theme of your choice
 * [Enhancement] Max photo per page limit extended to 999
