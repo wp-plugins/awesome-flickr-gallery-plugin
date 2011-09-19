@@ -1,10 +1,10 @@
 === Awesome Flickr Gallery ===
 Contributors: ronakg
 Donate link: http://www.ronakg.com/projects/awesome-flickr-gallery-wordpress-plugin/
-Tags: gallery, flickr, photo, image, slideshow, colorbox, portfolio, highslide, group, photoset, set, yahoo, slider, thumbnail
+Tags: gallery, flickr, photo, image, slideshow, colorbox, portfolio, highslide, group, photoset, set, yahoo, slider, thumbnail, awesome
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 
 Create a photo gallery of your Flickr photos on your WordPress enabled website
 enabling you to customize it the way you like it.
@@ -106,6 +106,10 @@ Still can't get the plugin working?  Head to the discussion forum for solution -
 [Discussions | RonakG.com](http://www.ronakg.com/discussions/)
 
 == Upgrade Notice ==
+
+= 3.0.1 =
+[Bug Fix] Awesome Flickr Gallery pagination doesn't work properly when qtranslate plugin is activated
+[Bug Fix] For galleries having more than 500 photos, it starts again with same set of photos
 
 = 3.0.0 =
 [FEATURE] Now you can include your PRIVATE PHOTOS also in galleries -
@@ -213,6 +217,10 @@ Gallery (In no particular order):
 * View photo comments
 
 == Changelog ==
+
+= 3.0.1 =
+* [Bug Fix] Awesome Flickr Gallery pagination doesn't work properly when qtranslate plugin is activated
+* [Bug Fix] For galleries having more than 500 photos, it starts again with same set of photos
 
 = 3.0.0 =
 * [Feature] Now you can include your PRIVATE PHOTOS also in galleries -
