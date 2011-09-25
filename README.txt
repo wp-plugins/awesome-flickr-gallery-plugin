@@ -4,7 +4,7 @@ Donate link: http://www.ronakg.com/projects/awesome-flickr-gallery-wordpress-plu
 Tags: gallery, flickr, photo, image, slideshow, colorbox, portfolio, highslide, group, photoset, set, yahoo, slider, thumbnail, awesome
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 3.0.1
+Stable tag: 3.0.5
 
 Create a photo gallery of your Flickr photos on your WordPress enabled website
 enabling you to customize it the way you like it.
@@ -23,6 +23,7 @@ galleries.
 * Create multiple galleries with different parameters
 * Select Photos from your Flickr Photostream, a Photoset, a Gallery or a Group
 * 2 Powerful slideshow options with thumbnail slider navigation
+* Customizable image sizes with cropping settings
 * Fits into a sidebar widget too
 * Insert multiple galleries on same page with independent slideshow and pagination
 * Fits automatically according to the width of the theme or you can select the width of the gallery yourself
@@ -37,16 +38,12 @@ Check out my home page to see a demo of how the Gallery fits into a sidebar widg
 
 **More Examples:**
 
-* [Demo Page | RonakG.com](http://www.ronakg.com/projects/awesome-flickr-gallery-wordpress-plugin/demo-page/)
+* [Demo Page](http://www.ronakg.com/projects/awesome-flickr-gallery-wordpress-plugin/demo-page/)
 
 **Support:**
 
 Can't get the plugin working?  Head to the discussion forum for solution -
 [Discussions | RonakG.com](http://www.ronakg.com/discussions/)
-
-**Video Tutorial on How to Configure Awesome Flickr Gallery**
-
-[youtube http://www.youtube.com/watch?v=ZGKcptkTSIs]
 
 == Installation ==
 
@@ -110,6 +107,11 @@ Still can't get the plugin working?  Head to the discussion forum for solution -
 [Discussions | RonakG.com](http://www.ronakg.com/discussions/)
 
 == Upgrade Notice ==
+
+= 3.0.5 =
+[FEATURE] Select custom sizes for thumbnails in gallery. 
+[ENHANCEMENT] Flexibility to modify gallery CSS to get desired look
+[ENHANCEMENT] Improved error reporting for better debuggability
 
 = 3.0.1 =
 [Bug Fix] Awesome Flickr Gallery pagination doesn't work properly when qtranslate plugin is activated
@@ -221,6 +223,11 @@ Gallery (In no particular order):
 * View photo comments
 
 == Changelog ==
+
+= 3.0.5 =
+* [Feature] Select custom sizes for thumbnails in gallery. 
+* [Enhancement] Flexibility to modify gallery CSS to get desired look
+* [Enhancement] Improved error reporting for better debuggability
 
 = 3.0.1 =
 * [Bug Fix] Awesome Flickr Gallery pagination doesn't work properly when qtranslate plugin is activated
