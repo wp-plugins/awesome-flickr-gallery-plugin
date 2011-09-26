@@ -2,7 +2,7 @@
 include_once('afg_libs.php');
 
 function afg_add_gallery() {
-    global $afg_per_page_map, $afg_photo_size_map, $afg_on_off_map,
+    global $afg_photo_size_map, $afg_on_off_map,
         $afg_descr_map, $afg_columns_map, $afg_bg_color_map,
         $afg_photo_source_map, $pf;
 
@@ -11,13 +11,13 @@ function afg_add_gallery() {
     $rsp_obj = $pf->photosets_getList($user_id);
     $photosets_map = array();
     foreach($rsp_obj['photoset'] as $photoset) {
-        $photosets_map[$photoset['id']] = $photoset['title'];
+        $photosets_map[$photoset['id']] = $photoset['title']['_content'];
     }
 
     $rsp_obj = $pf->galleries_getList($user_id);
     $galleries_map = array();
     foreach($rsp_obj['galleries']['gallery'] as $gallery) {
-        $galleries_map[$gallery['id']] = $gallery['title'];
+        $galleries_map[$gallery['id']] = $gallery['title']['_content'];
     }
 
     $groups_map = array();
@@ -33,8 +33,8 @@ function afg_add_gallery() {
             $groups_map[$group['nsid']] = $group['name'];
         }
     }
-
     ?>
+
    <div class='wrap'>
    <h2><a href='http://www.ronakg.com/projects/awesome-flickr-gallery-wordpress-plugin/'><img src="<?php
     echo (BASE_URL . '/images/logo_big.png'); ?>" align='center'/></a>Add Gallery | Awesome Flickr Gallery</h2>
@@ -69,6 +69,18 @@ function afg_add_gallery() {
                 $gallery['gallery_id'] = $_POST['afg_galleries_box'];
             else if ($_POST['afg_photo_source_type'] == 'group')
                 $gallery['group_id'] = $_POST['afg_groups_box'];
+
+            if ($gallery['photo_size'] == 'custom') {
+                if (ctype_digit($_POST['afg_custom_size']) && (int)$_POST['afg_custom_size'] >= 50 && (int)$_POST['afg_custom_size'] <= 500) {
+                    $gallery['custom_size'] = $_POST['afg_custom_size'];
+                }
+                else {
+                    $gallery['custom_size'] = 100;
+                    echo "<div class='updated'><p><strong>You entered invalid value for Custom Width option.  It has been set to 100.</strong></p></div>";
+
+                }
+                $gallery['custom_size_square'] = $_POST['afg_custom_size_square']?$_POST['afg_custom_size_square']:'false';
+            }
 
             $galleries = get_option('afg_galleries');
             $galleries[] = $gallery;
@@ -124,8 +136,8 @@ function afg_add_gallery() {
         " Settings</i>, the setting for this specific gallery will also change.";
     echo afg_box('Help', $message);
     echo afg_donate_box();
-?>
+    echo afg_fb_like_box(); ?>
                </div>
-            </form>
+                </form>
 <?php
 }
