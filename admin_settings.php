@@ -40,6 +40,14 @@ function afg_add_settings_links( $links, $file ) {
 
 function afg_admin_settings_header() {
     wp_enqueue_script('admin-settings-script');
+    add_action('admin_head', 'afg_admin_headers');
+}
+
+function afg_admin_headers() {
+    echo "
+          <link href=\"https://plus.google.com/110562610836727777499\" rel=\"publisher\" />
+          <script type=\"text/javascript\" src=\"https://apis.google.com/js/plusone.js\">
+</script>";
 }
 
 function afg_setup_options() {
@@ -63,6 +71,7 @@ function afg_setup_options() {
         );
         update_option('afg_galleries', $galleries);
     }
+    if (!get_option('afg_sort_order')) update_option('afg_sort_order', 'flickr');
 
     update_option('afg_version', VERSION);
 }
@@ -95,6 +104,7 @@ function afg_admin_init() {
     register_setting('afg_settings_group', 'afg_custom_size');
     register_setting('afg_settings_group', 'afg_custom_size_square');
     register_setting('afg_settings_group', 'afg_custom_css');
+    register_setting('afg_settings_group', 'afg_sort_order');
 
     // Register javascripts
     wp_register_script('edit-galleries-script', BASE_URL . '/js/edit_galleries.js');
@@ -109,6 +119,7 @@ function afg_get_all_options() {
         'afg_user_id' => get_option('afg_user_id'),
         'afg_photo_size' => get_option('afg_photo_size'),
         'afg_per_page' => get_option('afg_per_page'),
+        'afg_sort_order' => get_option('afg_sort_order'),
         'afg_captions' => get_option('afg_captions'),
         'afg_descr' => get_option('afg_descr'),
         'afg_columns' => get_option('afg_columns'),
@@ -152,7 +163,8 @@ create_afgFlickr_obj();
 
 function afg_admin_html_page() {
     global $afg_photo_size_map, $afg_on_off_map, $afg_descr_map, 
-        $afg_columns_map, $afg_bg_color_map, $afg_width_map, $pf;
+        $afg_columns_map, $afg_bg_color_map, $afg_width_map, $pf,
+        $afg_sort_order_map;
 ?>
    <div class='wrap'>
    <h2><a href='http://www.ronakg.com/projects/awesome-flickr-gallery-wordpress-plugin/'><img src="<?php
@@ -179,6 +191,7 @@ function afg_admin_html_page() {
                 update_option('afg_per_page', 10);
                 echo "<div class='updated'><p><strong>You entered invalid value for Per Page option.  It has been set to 10.</strong></p></div>";
             }
+            update_option('afg_sort_order', $_POST['afg_sort_order']);
             update_option('afg_photo_size', $_POST['afg_photo_size']);
             if (get_option('afg_photo_size') == 'custom') {
                 if (ctype_digit($_POST['afg_custom_size']) && (int)$_POST['afg_custom_size'] >= 50 && (int)$_POST['afg_custom_size'] <= 500) {
@@ -202,7 +215,7 @@ function afg_admin_html_page() {
             if (isset($_POST['afg_pagination']) && $_POST['afg_pagination']) update_option('afg_pagination', 'off');
             else update_option('afg_pagination', 'on');
 
-            echo "<div class='updated'><p><strong>Settings updated successfully.</strong></p></div>";
+            echo "<div class='updated'><p><strong>Settings updated successfully.</br></br><font style='color:red'>Important Note:</font> If you have installed a caching plugin (like WP Super Cache or W3 Total Cache etc.), you may have to delete your cached pages for the settings to take effect.</strong></p></div>";
             if (get_option('afg_api_secret') && !get_option('afg_flickr_token')) {
                 echo "<div class='updated'><p><strong>Click \"Grant Access\" button to authorize Awesome Flickr Gallery to access your private photos from Flickr.</strong></p></div>";
             }
@@ -213,9 +226,9 @@ function afg_admin_html_page() {
 ?>
     <form method='post' action='<?php echo $url ?>'>
         <?php echo afg_generate_version_line() ?>
-               <div class="postbox-container" style="width:69%; margin-right:1%">
+               <div class="postbox-container" style="width:69%; margin-right:1.5%">
                   <div id="poststuff">
-                     <div class="postbox">
+                     <div class="postbox" style='box-shadow:0 0 2px'>
                         <h3>Flickr Settings</h3>
                         <table class='form-table'>
                            <tr valign='top'>
@@ -250,7 +263,7 @@ function afg_admin_html_page() {
                   </div>
 
                   <div id="poststuff">
-                     <div class="postbox">
+                     <div class="postbox" style='box-shadow:0 0 2px'>
                         <h3>Gallery Settings</h3>
                         <table class='form-table'>
 
@@ -259,6 +272,15 @@ function afg_admin_html_page() {
                               <td style="width:28%"><input type='text' name='afg_per_page' id='afg_per_page' onblur='verifyPerPageBlank()' size='3' maxlength='3' value="<?php
     echo get_option('afg_per_page')?get_option('afg_per_page'):10;
 ?>" /><font style='color:red; font-weight:bold'>*</font></td>
+                           </tr>
+
+                            <tr valign='top'>
+                              <th scope='row'>Sort order of Photos</th>
+                              <td><select type='text' name='afg_sort_order' id='afg_sort_order'>
+                                    <?php echo afg_generate_options($afg_sort_order_map, get_option('afg_sort_order', 'flickr')); ?>
+                              </select>
+                              <td><font size='2'>Set the sort order of the photos as per your liking and forget about how photos are arranged on Flickr.</font></td>
+                              </td>
                            </tr>
 
                            <tr valign='top'>
@@ -345,7 +367,7 @@ function afg_admin_html_page() {
                         <input type="submit" name="submit" id="afg_save_changes" class="button-primary" value="Save Changes" />
                         <br /><br />
                         <div id="poststuff">
-                           <div class="postbox">
+                           <div class="postbox" style='box-shadow:0 0 2px'>
                               <h3>Your Photostream Preview</h3>
                               <table class='form-table'>
                                  <tr><th>If your Flickr Settings are correct, 5 of your recent photos from your Flickr photostream should appear here.</th></tr>
@@ -368,7 +390,7 @@ function afg_admin_html_page() {
                                     or page to actually see the Gallery.
                                  </td>
                            </table></div>
-                           <input type="submit" name="submit" class="button" value="Delete Cached Galleries" />
+                           <input type="submit" name="submit" class="button-secondary" value="Delete Cached Galleries"/>
                         </div>
 <?php
     if (DEBUG) {
@@ -397,7 +419,7 @@ function afg_admin_html_page() {
     echo afg_box('Usage Instructions', $message);
 
     echo afg_donate_box(); 
-    echo afg_fb_like_box();
+    echo afg_share_box();
 ?>
         </div>
             </form>

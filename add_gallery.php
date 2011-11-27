@@ -53,6 +53,7 @@ function afg_add_gallery() {
                 'gallery_descr' => $_POST['afg_add_gallery_descr'],
                 'photo_source' => $_POST['afg_photo_source_type'],
                 'per_page' => afg_filter($_POST['afg_per_page']),
+                'sort_order' => afg_filter($_POST['afg_sort_order']),
                 'photo_size' => afg_filter($_POST['afg_photo_size']),
                 'captions' => afg_filter($_POST['afg_captions']),
                 'descr' => afg_filter($_POST['afg_descr']),
@@ -69,6 +70,8 @@ function afg_add_gallery() {
                 $gallery['gallery_id'] = $_POST['afg_galleries_box'];
             else if ($_POST['afg_photo_source_type'] == 'group')
                 $gallery['group_id'] = $_POST['afg_groups_box'];
+            else if ($_POST['afg_photo_source_type'] == 'tags')
+                $gallery['tags'] = $_POST['afg_tags'];
 
             if ($gallery['photo_size'] == 'custom') {
                 if (ctype_digit($_POST['afg_custom_size']) && (int)$_POST['afg_custom_size'] >= 50 && (int)$_POST['afg_custom_size'] <= 500) {
@@ -100,9 +103,9 @@ function afg_add_gallery() {
 ?>
 
             <form method='post' action='<?php echo $url ?>'>
-               <div class="postbox-container" style="width:69%; margin-right:1%">
+               <div class="postbox-container" style="width:69%; margin-right:1.5%">
                   <div id="poststuff">
-                     <div class="postbox">
+                     <div class="postbox" style='box-shadow:0 0 2px'>
                         <h3>Gallery Parameters</h3>
                         <table class='form-table'>
                            <tr valign='top'>
@@ -136,7 +139,8 @@ function afg_add_gallery() {
         " Settings</i>, the setting for this specific gallery will also change.";
     echo afg_box('Help', $message);
     echo afg_donate_box();
-    echo afg_fb_like_box(); ?>
+    echo afg_share_box();
+?>
                </div>
                 </form>
 <?php
