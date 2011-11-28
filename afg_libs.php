@@ -3,7 +3,16 @@
 define('BASE_URL', plugins_url() . '/' . basename(dirname(__FILE__)));
 define('SITE_URL', get_option('siteurl'));
 define('DEBUG', false);
-define('VERSION', '3.1.5');
+define('VERSION', '3.2.1');
+
+$afg_sort_order_map = array(
+    'default' => 'Default',
+    'flickr' => 'As per Flickr',
+    'date_taken_cmp_newest' => 'By date taken (Newest first)',
+    'date_taken_cmp_oldest' => 'By date taken (Oldest first)',
+    'date_upload_cmp_newest' => 'By date uploaded (Newest first)',
+    'date_upload_cmp_oldest' => 'By date uploaded (Oldest first)',
+);
 
 /* Map for photo titles displayed on the gallery. */
 $size_heading_map = array(
@@ -18,6 +27,7 @@ $afg_photo_source_map = array(
     'gallery' => 'Gallery',
     'photoset' => 'Photoset',
     'group' => 'Group',
+    'tags' => 'Tags',
 );
 
 $afg_width_map = array(
@@ -101,18 +111,37 @@ function afg_error() {
     return "<h3>Awesome Flickr Gallery Error - $pf->error_msg</h3>";
 }
 
-function afg_fb_like_box() {
-    return "<div id=\"fb-root\"></div>
-        <script>(function(d, s, id) {
-var js, fjs = d.getElementsByTagName(s)[0];
-if (d.getElementById(id)) {return;}
-js = d.createElement(s); js.id = id;
-js.src = \"//connect.facebook.net/en_US/all.js#xfbml=1\";
-fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+function date_taken_cmp_newest($a, $b) {
+    return $a['datetaken'] < $b['datetaken'];
+}
 
-    <div class=\"fb-like-box\" data-href=\"https://www.facebook.com/pages/Awesome-Flickr-Gallery/178711828873172\" data-width=\"292\" data-height=\"350\" data-show-faces=\"true\" data-stream=\"true\" data-header=\"true\"></div>
-    ";
+function date_taken_cmp_oldest($a, $b) {
+    return $a['datetaken'] > $b['datetaken'];
+}
+
+function date_upload_cmp_newest($a, $b) {
+    return $a['dateupload'] < $b['dateupload'];
+}
+
+function date_upload_cmp_oldest($a, $b) {
+    return $a['dateupload'] > $b['dateupload'];
+}
+
+function afg_fb_like_box() {
+    return "<iframe src=\"//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fawesome.flickr.gallery&amp;width=300&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;border_color&amp;stream=false&amp;header=false&amp;appId=107783615948615\" scrolling=\"no\" frameborder=\"0\" style=\"border:none; overflow:hidden; width:300px; height:170px;\" allowTransparency=\"true\"></iframe>";
+}
+
+function afg_share_box() {
+    return "<div id=\"poststuff\">
+        <div class=\"postbox\" style='width:300px; box-shadow:0 0 2px'>
+        <h3>Follow Awesome Flickr Gallery</h3>"
+        . afg_fb_like_box()
+        . afg_gplus_box()
+        . "</div></div>";
+}
+
+function afg_gplus_box() {
+    return "<div class=\"g-plus\" data-href=\"https://plus.google.com/110562610836727777499\" data-size=\"badge\"></div>";
 }
 
 function delete_afg_caches() {
@@ -167,7 +196,7 @@ function afg_generate_flickr_settings_table($photosets, $galleries, $groups) {
     $groups = afg_generate_options($groups, '', False);
     return "
     <div id=\"poststuff\">
-<div class=\"postbox\">
+<div class=\"postbox\" style='box-shadow:0 0 2px'>
     <h3>Flickr Settings</h3>
     <table class='form-table'>
         <tr valign='top'>
@@ -182,7 +211,10 @@ function afg_generate_flickr_settings_table($photosets, $galleries, $groups) {
         <select style='display:none' name='afg_galleries_box' id='afg_galleries_box'>$galleries
         </select>
         <select style='display:none' name='afg_groups_box' id='afg_groups_box'>$groups
-        </select></td>
+        </select>
+        <textarea rows='3' cols='30' name='afg_tags' id='afg_tags' style='display:none'></textarea>
+        </td>
+        <td id='afg_source_help' style='display:none'><font size='2'>Enter tags separated by comma. For example: <b>tag1, tag2, tag3, tag4</b><br />Photos matching any of the given tags will be displayed.</font></td>
         </tr>
     </table>
 </div></div>";
@@ -192,7 +224,7 @@ function afg_generate_flickr_settings_table($photosets, $galleries, $groups) {
 function afg_generate_gallery_settings_table() {
     global $afg_photo_size_map, $afg_on_off_map, $afg_descr_map, 
         $afg_columns_map, $afg_bg_color_map, $afg_photo_source_map, 
-        $afg_width_map, $afg_yes_no_map;
+        $afg_width_map, $afg_yes_no_map, $afg_sort_order_map;
     
     if (get_option('afg_photo_size') == 'custom')
         $photo_size = '(Custom - ' . get_option('afg_custom_size') . 'px' . ((get_option('afg_custom_size_square') == 'true')? ' - Square)': ')');
@@ -201,7 +233,7 @@ function afg_generate_gallery_settings_table() {
 
     return "
     <div id=\"poststuff\">
-        <div class=\"postbox\">
+        <div class=\"postbox\" style='box-shadow:0 0 2px'>
         <h3>Gallery Settings</h3>
         <table class='form-table'>
 
@@ -210,6 +242,15 @@ function afg_generate_gallery_settings_table() {
         <td style='width:28%'><input type='checkbox' name='afg_per_page_check' id='afg_per_page_check' onclick='showHidePerPage()' value='default' checked='' style='vertical-align:top'> Default </input><input name='afg_per_page' disabled='true' id='afg_per_page' type='text' size='3' maxlength='3' onblur='verifyBlank()' value='10'/> 
         </td>
         </tr>
+
+        <tr valign='top'>
+        <th scope='row'>Sort order of Photos</th>
+        <td><select name='afg_sort_order' id='afg_sort_order'>"
+        . afg_generate_options($afg_sort_order_map, 'default', True, $afg_sort_order_map[get_option('afg_sort_order')]) . "
+    </select>
+            <td><font size='2'>Set the sort order of the photos as per your liking and forget about how photos are arranged on Flickr.</font></td>
+            </td>
+            </tr>
 
         <tr valign='top'>
         <th scope='row'>Size of Photos</th>
@@ -312,7 +353,7 @@ function afg_filter($param) {
 function afg_box($title, $message) {
      return "
         <div id=\"poststuff\">
-        <div class=\"postbox\">
+        <div class=\"postbox\" style='box-shadow:0 0 2px'>
         <h3>$title</h3>
         <table class='form-table'>
         <td>$message</td>
@@ -324,7 +365,7 @@ function afg_box($title, $message) {
 function afg_usage_box($code) {
     return "
         <div id=\"poststuff\">
-        <div class=\"postbox\">
+        <div class=\"postbox\" style='box-shadow:0 0 2px'>
         <h3>Usage Instructions</h3>
         <table class='form-table'>
         <td>Just insert $code in any of the posts or page to display your Flickr gallery.</td>
@@ -341,7 +382,7 @@ function get_afg_option($gallery, $var) {
 function afg_donate_box() {
     return "
         <div id=\"poststuff\">
-        <div class=\"postbox\">
+        <div class=\"postbox\" style='box-shadow:0 0 2px'>
         <h3>Support this plugin</h3>
         <table class='form-table'>
         <td>It takes time and effort to keep releasing new versions of this plugin.  If you like it, consider donating a few bucks <b>(especially if you are using this plugin on a commercial website)</b> to keep receiving new features.
