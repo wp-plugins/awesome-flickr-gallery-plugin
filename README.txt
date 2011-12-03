@@ -3,8 +3,8 @@ Contributors: ronakg
 Donate link: http://www.ronakg.com/projects/awesome-flickr-gallery-wordpress-plugin/
 Tags: gallery, flickr, photo, image, slideshow, colorbox, portfolio, highslide, group, photoset, set, yahoo, slider, thumbnail
 Requires at least: 3.0
-Tested up to: 3.3-beta3
-Stable tag: 3.1.5
+Tested up to: 3.3-beta4
+Stable tag: 3.2.1
 
 Create a photo gallery of your Flickr photos on your WordPress enabled WebSite
 enabling you to customize it the way you like it.
@@ -21,8 +21,9 @@ galleries.
 * Fast and light - uses intelligent caching to load galleries instantly
 * Support for both Public and Private photos
 * Create multiple galleries with different parameters
-* Select Photos from your Flickr Photostream, a Photoset, a Gallery or a Group
+* Select Photos from your Flickr Photostream, a Photoset, a Gallery, a Group or a set of tags
 * 2 Powerful slideshow options with thumbnail slider navigation
+* Multiple sorting options available so that you don't have to rely on Flickr's sorting options
 * Customizable image sizes with cropping settings
 * Infinitely customizable with custom CSS field
 * Fits into a sidebar widget too
@@ -113,6 +114,18 @@ Still can't get the plugin working?  Head to the discussion forum for solution -
 
 == Upgrade Notice ==
 
+= 3.2.3 =
+
+[FEATURE] Show off your Popular Flickr photos by selecting My Popular Photos as the source for the gallery.
+
+= 3.2.1 =
+[MAJOR FEATURE] Now galleries can be created using tags.
+[Enhancement] For galleries created using a Flickr Gallery, URL of the owner's Flickr profile page appears as part of the title of the photo
+[Bug Fix] Slideshow doesn't show all the photos when accessed from any page but first
+
+= 3.1.7 =
+[FEATURE] Multiple sorting options now available for galleries. You can now use these options to override your sorting options set on Flickr.
+
 = 3.1.5 =
 [ENHANCEMENT] Editors can now access Add/Delete/Saved Galleries page.
 [ENHANCEMENT] Colorbox and HighSlide updated to latest versions.
@@ -198,16 +211,37 @@ MUST UPGRADE for all who are facing conflict issue with other plugin or themes.
 8. Saved Galleries Page
 9. Advanced Settings Page
 
-== Features Planned ==
+== User Testimonials ==
 
-Here's a list of planned features in upcoming releases of Awesome Flickr
-Gallery (In no particular order):
-
-* Add multiple User accounts to generate Galleries
-* Generate a master gallery page with all your galleries linking to individual gallery pages
-* View photo comments
+* This remains the best way to set up flickr galleries! – forpetessake93
+* The Tag feature works great! I have been waiting for a plugin like this. I love your plugin. - ryangirtler
+* The name of AFG says it all. I really like the way you’ve taken the time to make a UI for creating & editing galleries. – chassy
+* this plugin is AMAZING!! Thank you – Yardena
+* The gallery looks exceptionally clean and professional. – sherrieJD
+* Awesome plugin! Awesome support! – zumine
+* Super. It is a pleasure to work with you. Very professional and highly reactive. – fibonaccifactory
+* Awesome. You rock. – VisionsInEd
+* Thanks Ronak. It works beautifully. Awesome app you have built here. – miracleboy31
+* You rock so much. Such a quick response time. Your plugin is SO SO SO much better than other flickr plugins. – AutoEntropy
+* this gallery plugin is excellent I really like it and working with Flickr and WordPress makes my workflow much easier. – AtlantisWeb
+* I have to say that I am loving what I am seeing. I set up a gallery and it looks great.  – svogt
+* MANY thanks for your awesome Awesome Flickr Gallery! Works like a charm. -  Jessin
+* i prefer awesome flickr gallery (i think is smoother and faster than slickr flickr) – apocalipsis1234
+* your Awesome Flickr Gallery is one of the best plugins out there!! – RichardF
 
 == Changelog ==
+
+= 3.2.3 =
+
+* [Feature] Show off your Popular Flickr photos by selecting My Popular Photos as the source for the gallery.
+
+= 3.2.1 =
+* [Major Feature] Now galleries can be created using tags.
+* [Enhancement] For galleries created using a Flickr Gallery, URL of the owner's Flickr profile page appears as part of the title of the photo
+* [Bug Fix] Slideshow doesn't show all the photos when accessed from any page but first
+
+= 3.1.7 =
+* [Feature] Multiple sorting options now available for galleries. You can now use these options to override your sorting options set on Flickr.
 
 = 3.1.5 =
 * [Enhancement] Editors can now access Add/Delete/Saved Galleries page.
