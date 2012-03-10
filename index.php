@@ -50,8 +50,9 @@ function afg_check_for_plugin_update($checked_data) {
 		return $checked_data;
 	
 	$request_args = array(
-		'slug' => $plugin_slug,
-		'version' => $checked_data->checked[$plugin_slug .'/'. $plugin_slug_file],
+        'slug' => $plugin_slug,
+        'version' => $checked_data->checked[$plugin_slug .'/'. $plugin_slug_file],
+        'package_type' => 'stable',
 	);
 
 	$request_string = afg_prepare_request('basic_check', $request_args);
