@@ -4,7 +4,7 @@ Donate link: http://www.ronakg.com/projects/awesome-flickr-gallery-wordpress-plu
 Tags: awesome, gallery, flickr, photo, image, slideshow, colorbox, portfolio, group, photoset, yahoo, slider, thumbnail, images
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 3.3.2
+Stable tag: 3.3.3
 License: GPLv2 or later
 
 Create a photo gallery of your Flickr photos on your WordPress enabled WebSite enabling you to customize it the way you like it.
@@ -112,6 +112,9 @@ Still can't get the plugin working?  Head to the discussion forum for solution -
 [Discussions | RonakG.com](http://www.ronakg.com/discussions/)
 
 == Upgrade Notice ==
+
+= 3.3.3 =
+[FEATURE] This version introduces a capability to update the plugin from a different host other than WordPress. This will allow me to bring back HighSlide slideshow (and few other options), which I can't if the plugin is hosted on WordPress.org. Update to this version so that you can get all the exciting features in future.
 
 = 3.3.2 =
 [ENHANCEMENT] Intelligently resize images based on orientation of the image (landscape vs portrait).
