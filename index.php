@@ -122,7 +122,7 @@ if (!is_admin()) {
      * [AFG_gallery] in posts or pages and loads the gallery.
      */
     add_shortcode('AFG_gallery', 'afg_display_gallery');
-    add_filter('widget_text', 'do_shortcode', SHORTCODE_PRIORITY);
+    add_filter('widget_text', 'do_shortcode', 'SHORTCODE_PRIORITY');
 
     $enable_colorbox = false;
 
@@ -131,18 +131,18 @@ if (!is_admin()) {
         if($gallery['slideshow_option'] == 'colorbox') $enable_colorbox = true;
     }
 
-    if (get_option('afg_slideshow_option') == 'colorbox' || $enable_colorbox)
-        add_action('wp_print_scripts', 'enqueue_cbox_scripts');
-    add_action('wp_print_styles', 'enqueue_afg_styles');
+    add_action('wp_enqueue_scripts', 'enqueue_afg_scripts');
 }
 
 add_action('wp_head', 'add_afg_headers');
 
-function enqueue_cbox_scripts() {
-    wp_enqueue_script('jquery');
-    wp_enqueue_script('afg_colorbox_script', BASE_URL . "/colorbox/jquery.colorbox.js" , array('jquery'));
-    wp_enqueue_script('afg_colorbox_js', BASE_URL . "/colorbox/mycolorbox.js" , array('jquery'));
-    wp_enqueue_style('afg_colorbox_css', BASE_URL . "/colorbox/colorbox.css");
+function enqueue_afg_scripts() {
+    if (get_option('afg_slideshow_option') == 'colorbox' || $enable_colorbox) {
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('afg_colorbox_script', BASE_URL . "/colorbox/jquery.colorbox.js" , array('jquery'));
+        wp_enqueue_script('afg_colorbox_js', BASE_URL . "/colorbox/mycolorbox.js" , array('jquery'));
+        wp_enqueue_style('afg_colorbox_css', BASE_URL . "/colorbox/colorbox.css");
+    }
 }
 
 function enqueue_afg_styles() {
