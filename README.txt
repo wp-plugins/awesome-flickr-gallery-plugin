@@ -282,10 +282,10 @@ MUST UPGRADE for all who are facing conflict issue with other plugin or themes.
 == Changelog ==
 
 = 3.3.5 =
-[Bug Fix] Add support for Flickr API changes related to SSL.
-[Bug Fix] When adding gallery, photosets and groups are now sorted alphabetically.
-[Bug Fix] Sometimes only one column shows up even when configured value is higher.
-[Bug Fix] Other minor bug fixes.
+* [Bug Fix] Add support for Flickr API changes related to SSL.
+* [Bug Fix] When adding gallery, photosets and groups are now sorted alphabetically.
+* [Bug Fix] Sometimes only one column shows up even when configured value is higher.
+* [Bug Fix] Other minor bug fixes.
 
 = 3.3.4 =
 [Bug Fix] Get rid of annoying warning messages when DEBUG is enabled.
