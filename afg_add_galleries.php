@@ -11,36 +11,8 @@ function afg_add_gallery() {
     $photosets_map = array();
     $groups_map = array();
     $galleries_map = array();
-    $rsp_obj = $pf->photosets_getList($user_id);
-    if (!$pf->error_code) {
-        foreach($rsp_obj['photoset'] as $photoset) {
-            $photosets_map[$photoset['id']] = $photoset['title']['_content'];
-        }
-    }
 
-    $rsp_obj = $pf->galleries_getList($user_id);
-    if (!$pf->error_code) {
-        foreach($rsp_obj['galleries']['gallery'] as $gallery) {
-            $galleries_map[$gallery['id']] = $gallery['title']['_content'];
-        }
-    }
-
-    if (get_option('afg_flickr_token')) {
-        $rsp_obj = $pf->groups_pools_getGroups();
-        if (!$pf->error_code) {
-            foreach($rsp_obj['group'] as $group) {
-                $groups_map[$group['nsid']] = $group['name'];
-            }
-        }
-    }
-    else {
-        $rsp_obj = $pf->people_getPublicGroups($user_id);
-        if (!$pf->error_code) {
-            foreach($rsp_obj as $group) {
-                $groups_map[$group['nsid']] = $group['name'];
-            }
-        }
-    }
+    afg_get_sets_groups_galleries($photosets_map, $groups_map, $galleries_map, $user_id);
     ?>
 
    <div class='wrap'>
@@ -85,13 +57,18 @@ function afg_add_gallery() {
             if ($gallery['photo_size'] == 'custom') {
                 if (ctype_digit($_POST['afg_custom_size']) && (int)$_POST['afg_custom_size'] >= 50 && (int)$_POST['afg_custom_size'] <= 500) {
                     $gallery['custom_size'] = $_POST['afg_custom_size'];
+                    if (!is_dir(dirname(__FILE__) . "/cache")) {
+                        if (!wp_mkdir_p(dirname(__FILE__) . "/cache")) {
+                            echo("<div class='updated'><p>Could not create directory - '" . dirname(__FILE__) . "/cache'. This is required for custom size photos to be displayed. Manually create this directory and set permissions for this directory as 777.</p></div>");
+                        }
+                    }
                 }
                 else {
                     $gallery['custom_size'] = 100;
                     echo "<div class='updated'><p><strong>You entered invalid value for Custom Width option.  It has been set to 100.</strong></p></div>";
 
                 }
-                $gallery['custom_size_square'] = $_POST['afg_custom_size_square']?$_POST['afg_custom_size_square']:'false';
+                $gallery['custom_size_square'] = isset($_POST['afg_custom_size_square'])?$_POST['afg_custom_size_square']:'false';
             }
 
             $galleries = get_option('afg_galleries');
@@ -107,34 +84,40 @@ function afg_add_gallery() {
 <?php
         }
 
-    echo afg_generate_version_line();
     $url=$_SERVER['REQUEST_URI'];
 ?>
 
             <form method='post' action='<?php echo $url ?>'>
-               <div class="postbox-container" style="width:69%; margin-right:1%">
-                  <div id="poststuff">
-                     <div class="postbox" style='box-shadow:0 0 2px'>
+               <div id="afg-wrap">
+                   <?php echo afg_generate_version_line() ?>
+                     <div id="afg-main-box">
                         <h3>Gallery Parameters</h3>
-                        <table class='form-table'>
-                           <tr valign='top'>
-                              <th scope='row'>Gallery Name</th>
-                              <td><input maxlength='30' type='text' id='afg_add_gallery_name' name='afg_add_gallery_name' onblur='verifyBlank()' value='' /><font size='3' color='red'>*</font></td>
+                        <table class='widefat afg-settings-box'>
+                            <tr>
+                                <th class="afg-label"></th>
+                                <th class="afg-input"></th>
+                                <th class="afg-help-bubble"></th>
+                            </tr>
+                           <tr>
+                              <td>Gallery Name</td>
+                              <td><input class='afg-input' maxlength='30' type='text' id='afg_add_gallery_name' name='afg_add_gallery_name' onblur='verifyBlank()' value='' />*</td>
                            </tr>
-                           <tr valign='top'>
-                              <th scope='row'>Gallery Description</th>
-                              <td><input maxlength='100' size='70%' type='text' id='afg_add_gallery_descr' name='afg_add_gallery_descr'" value="" /></td>
+                           <tr>
+                              <td>Gallery Description</td>
+                              <td><input class='afg-input' maxlength='100' type='text' id='afg_add_gallery_descr' name='afg_add_gallery_descr' value="" /></td>
                            </tr>
                         </table>
-                  </div></div>
 <?php
     echo afg_generate_flickr_settings_table($photosets_map, $galleries_map, $groups_map);
     echo afg_generate_gallery_settings_table();
 ?>
+                  <br />
                   <input type="submit" disabled='true' id="afg_save_changes" class="button-primary"
                   value="Add Gallery" />
-               </div>
-               <div class="postbox-container" style="width: 29%;">
+              </div>
+
+
+               <div id='afg-side-box'>
 <?php
     $message = "<b>Gallery Description</b> - Provide a meaningful description of" .
         " your gallery for you to recognize it easily.<br /><br />" .
