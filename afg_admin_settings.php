@@ -57,7 +57,7 @@ function afg_setup_options() {
     if (get_option('afg_credit_note') == '1' || get_option('afg_credit_note') == 'Yes') update_option('afg_credit_note', 'on');
     if (get_option('afg_credit_note') == '0') update_option('afg_credit_note', 'off');
     if (!get_option('afg_pagination')) update_option('afg_pagination', 'on');
-    if (get_option('afg_slideshow_option') == '' || get_option('afg_slideshow_option') == 'highslide') update_option('afg_slideshow_option', 'colorbox');
+    if (get_option('afg_slideshow_option') == '' || get_option('afg_slideshow_option') == 'highslide') update_option('afg_slideshow_option', 'swipebox');
     if (get_option('afg_custom_css') == '') update_option('afg_custom_css', '/* Start writing your custom CSS here */');
     if (get_option('afg_disable_slideshow')) update_option('afg_slideshow_option', 'disable');
 
@@ -178,13 +178,12 @@ function upgrade_handler() {
     $galleries = get_option('afg_galleries');
     if ($galleries) {
         foreach ($galleries as &$gallery) {
-            if (!isset($gallery['slideshow_option']))
-                $gallery['slideshow_option'] = 'colorbox';
+            if (!isset($gallery['slideshow_option']) && $gallery['slideshow_option'] == 'highslide')
+                $gallery['slideshow_option'] = 'swipebox';
         }
         update_option('afg_galleries', $galleries);
     }
     unset($gallery);
-
 }
 
 upgrade_handler();
@@ -357,7 +356,7 @@ if ($_POST)
                               <tr>
                                  <td>Slideshow Behavior</td>
                                  <td><select name='afg_slideshow_option'>
-                                       <?php echo afg_generate_options($afg_slideshow_map, get_option('afg_slideshow_option', 'colorbox')); ?>
+                                       <?php echo afg_generate_options($afg_slideshow_map, get_option('afg_slideshow_option', 'swipebox')); ?>
                                  </select></td>
                               </tr>
 

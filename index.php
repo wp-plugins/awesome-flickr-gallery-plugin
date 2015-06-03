@@ -3,7 +3,7 @@
    Plugin Name: Awesome Flickr Gallery
    Plugin URI: http://www.ronakg.com/projects/awesome-flickr-gallery-wordpress-plugin/
    Description: Awesome Flickr Gallery is a simple, fast and light plugin to create a gallery of your Flickr photos on your WordPress enabled website.  This plugin aims at providing a simple yet customizable way to create stunning Flickr gallery.
-   Version: 3.3.6
+   Version: 3.5.2
    Author: Ronak Gandhi
    Author URI: http://www.ronakg.com
    License: GPL2
@@ -34,8 +34,18 @@ function afg_enqueue_cbox_scripts() {
     wp_enqueue_script('afg_colorbox_js', BASE_URL . "/colorbox/mycolorbox.js" , array('jquery'));
 }
 
+function afg_enqueue_swipebox_scripts() {
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('afg_swipebox_script', BASE_URL . "/swipebox/js/jquery.swipebox.min.js" , array('jquery'));
+    wp_enqueue_script('afg_swipebox_js', BASE_URL . "/swipebox/myswipebox.js" , array('jquery'));
+}
+
 function afg_enqueue_cbox_styles() {
     wp_enqueue_style('afg_colorbox_css', BASE_URL . "/colorbox/colorbox.css");
+}
+
+function afg_enqueue_swipebox_styles() {
+    wp_enqueue_style('afg_swipebox_css', BASE_URL . "/swipebox/css/swipebox.min.css");
 }
 
 function afg_enqueue_styles() {
@@ -43,8 +53,10 @@ function afg_enqueue_styles() {
 }
 
 $enable_colorbox = get_option('afg_slideshow_option') == 'colorbox';
+$enable_swipebox = get_option('afg_slideshow_option') == 'swipebox';
 
 if (!is_admin()) {
+    global $enable_colorbox, $enable_swipebox;
     /* Short code to load Awesome Flickr Gallery plugin.  Detects the word
      * [AFG_gallery] in posts or pages and loads the gallery.
      */
@@ -57,11 +69,21 @@ if (!is_admin()) {
             $enable_colorbox = true;
             break;
         }
+
+        if ($gallery['slideshow_option'] == 'swipebox') {
+            $enable_swipebox = true;
+            break;
+        }
     }
 
     if ($enable_colorbox) {
         add_action('wp_print_scripts', 'afg_enqueue_cbox_scripts');
         add_action('wp_print_styles', 'afg_enqueue_cbox_styles');
+    }
+
+    if ($enable_swipebox) {
+        add_action('wp_print_scripts', 'afg_enqueue_swipebox_scripts');
+        add_action('wp_print_styles', 'afg_enqueue_swipebox_styles');
     }
 
     add_action('wp_print_styles', 'afg_enqueue_styles');
@@ -217,33 +239,29 @@ function afg_display_gallery($atts) {
     if ($photos == false || $total_photos != count($photos)) {
         $photos = array();
         for($i=1; $i<($total_photos/500)+1; $i++) {
+            $flickr_api = 'photos';
             if ($photoset_id) {
                 $flickr_api = 'photoset';
                 $rsp_obj_total = $pf->photosets_getPhotos($photoset_id, $extras, NULL, 500, $i);
                 if ($pf->error_code) return afg_error();
             }
             else if ($gallery_id) {
-                $flickr_api = 'photos';
                 $rsp_obj_total = $pf->galleries_getPhotos($gallery_id, $extras, 500, $i);
                 if ($pf->error_code) return afg_error();
             }
             else if ($group_id) {
-                $flickr_api = 'photos';
                 $rsp_obj_total = $pf->groups_pools_getPhotos($group_id, NULL, NULL, NULL, $extras, 500, $i);
                 if ($pf->error_code) return afg_error();
             }
             else if ($tags) {
-                $flickr_api = 'photos';
                 $rsp_obj_total = $pf->photos_search(array('user_id'=>$user_id, 'tags'=>$tags, 'extras'=>$extras, 'per_page'=>500, 'page'=>$i));
                 if ($pf->error_code) return afg_error();
             }
             else if ($popular) {
-                $flickr_api = 'photos';
                 $rsp_obj_total = $pf->photos_search(array('user_id'=>$user_id, 'sort'=>'interestingness-desc', 'extras'=>$extras, 'per_page'=>500, 'page'=>$i));
                 if ($pf->error_code) return afg_error();
             }
             else {
-                $flickr_api = 'photos';
                 if (get_option('afg_flickr_token')) $rsp_obj_total = $pf->people_getPhotos($user_id, array('extras' => $extras, 'per_page' => 500, 'page' => $i));
                 else $rsp_obj_total = $pf->people_getPublicPhotos($user_id, NULL, $extras, 500, $i);
                 if ($pf->error_code) return afg_error();
@@ -282,6 +300,11 @@ function afg_display_gallery($atts) {
         if ($slideshow_option == 'colorbox') {
             $class = "class='afgcolorbox'";
             $rel = "rel='example4{$id}'";
+            $click_event = "";
+        }
+        else if ($slideshow_option == 'swipebox') {
+            $class = "class='swipebox'";
+            //$rel = "rel='gallery-{$id}'";
             $click_event = "";
         }
         else if ($slideshow_option == 'flickr') {

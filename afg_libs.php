@@ -18,6 +18,7 @@ $afg_sort_order_map = array(
 $afg_slideshow_map = array(
     'default' => 'Default',
     'colorbox' => 'Colorbox',
+    'swipebox' => 'Swipebox (Touch Enabled)',
     'disable' => 'No Slideshow',
     'flickr' => 'Link to Flickr Photo page',
     'none' => 'No Slideshow and No Link',
