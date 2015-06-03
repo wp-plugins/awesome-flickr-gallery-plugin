@@ -4,7 +4,7 @@ Donate link: http://www.ronakg.com/projects/awesome-flickr-gallery-wordpress-plu
 Tags: awesome, gallery, flickr, photo, image, slideshow, colorbox, portfolio, group, photoset, yahoo, slider, thumbnail, images
 Requires at least: 3.0
 Tested up to: 4.2.2
-Stable tag: 3.3.5
+Stable tag: 3.3.6
 License: GPLv2 or later
 
 Create a photo gallery of your Flickr photos on your WordPress enabled Website enabling you to customize it the way you like it.
