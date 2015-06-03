@@ -27,7 +27,6 @@
 require_once('afgFlickr/afgFlickr.php');
 include_once('afg_admin_settings.php');
 include_once('afg_libs.php');
-include_once('afg_update.php');
 
 function afg_enqueue_cbox_scripts() {
     wp_enqueue_script('jquery');
